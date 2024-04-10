@@ -7,7 +7,7 @@ def pascal_triangle(n):
     """ Returns a list of lists of pascal's triangle upto n rows """
 
     if n <= 0:
-        return None
+        return []
     p_triangle = create_p_triangle_recursively([], n)
 
     return p_triangle
