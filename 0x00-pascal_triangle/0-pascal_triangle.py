@@ -17,8 +17,9 @@ def create_p_triangle_recursively(p_triangle, n):
     """ Creates the rows recursively """
 
     if n == 1:
-        return [[1], [1, 1]]
+        return [[1]]
     p_triangle = create_p_triangle_recursively(p_triangle, n - 1)
+
     prev_row = p_triangle[len(p_triangle) - 1]
     row, col = [], 0
 
