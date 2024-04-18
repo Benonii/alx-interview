@@ -8,7 +8,7 @@ from queue import Queue
 def canUnlockAll(boxes):
     ''' Returns a boolean determining if you can open all boxes or not '''
     keys = set()
-    opened_boxes = [boxes[0]]
+    opened_boxes = [boxes[0] if boxes and boxes[0] != [] else None]
 
     def get_keys(boxes):
         """ Gets all the keys for the boxes recursively """
@@ -20,19 +20,20 @@ def canUnlockAll(boxes):
 
         return keys
 
-    for key in boxes[0]:
-        opened_boxes.append(boxes[key])
+    if boxes:
+        for key in boxes[0]:
+            opened_boxes.append(boxes[key])
 
     closed_boxes = [box for box in boxes if box not in opened_boxes]
 
     for box in boxes:
         if box in opened_boxes:
             continue
-
-        keys = get_keys(opened_boxes)
-        if boxes.index(box) in keys:
-            opened_boxes.append(box)
-            closed_boxes.remove(box)
         else:
-            return False
+            keys = get_keys(opened_boxes)
+            if boxes.index(box) in keys:
+                opened_boxes.append(box)
+                closed_boxes.remove(box)
+            else:
+                return False
     return True
