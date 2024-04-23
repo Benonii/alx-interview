@@ -37,7 +37,8 @@ def add_prime_factors(n, primes, Sum):
 def minOperations(n):
     ''' Function to determine the miminum operations required to print a
         character n times wit copyAll and paste as the only operations. '''
-
+    if not isinstance(n, int):
+        return 0
     primes = find_prime_factors(n)
 
     min_ops = add_prime_factors(n, primes, 0)
