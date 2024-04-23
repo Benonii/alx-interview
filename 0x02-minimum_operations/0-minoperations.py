@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-''' Contanins the function isPrime, find_prime_factors, add_prime_factors,
+''' Contanins the function isPrime, find_prime_factors, factorize_add_primes,
     minOperations '''
 
 
@@ -14,15 +14,10 @@ def is_prime(n):
 
 def find_prime_factors(n):
     ''' Find all the prime factors of n '''
-    prime_factors = []
-    for i in range(2, n):
-        if is_prime(i):
-            if n % i == 0:
-                prime_factors.append(i)
-    return prime_factors
+    return [i for i in range(2, n) if is_prime(i) and n % i == 0]
 
 
-def add_prime_factors(n, primes, Sum):
+def factorize_add_primes(n, primes, Sum):
     ''' Find the sum of the prime factors of n '''
     for i in primes:
         if n / i == 1.0:
@@ -30,7 +25,7 @@ def add_prime_factors(n, primes, Sum):
             return Sum
         elif n % i == 0:
             Sum += i
-            return add_prime_factors(n / i, primes, Sum)
+            return factorize_add_primes(n / i, primes, Sum)
     return Sum
 
 
@@ -41,6 +36,6 @@ def minOperations(n):
         return 0
     primes = find_prime_factors(n)
 
-    min_ops = add_prime_factors(n, primes, 0)
+    min_ops = factorize_add_primes(n, primes, 0)
 
     return min_ops
