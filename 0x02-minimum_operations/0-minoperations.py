@@ -35,6 +35,7 @@ def minOperations(n):
     if not isinstance(n, int) or n <= 1:
         return 0
     primes = find_prime_factors(n)
+    print(primes)
 
     min_ops = factorize_add_primes(n, primes, 0)
 
