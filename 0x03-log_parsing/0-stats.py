@@ -17,7 +17,7 @@ def signal_handler(signal, form):
     sys.exit(0)
 
 
-signal.signal(signal.SIGINT, signal_handler)
+# signal.signal(signal.SIGINT, signal_handler)
 
 
 def print_stats(total_size, statuses):
