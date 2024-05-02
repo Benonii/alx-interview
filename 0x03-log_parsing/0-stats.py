@@ -45,7 +45,7 @@ for log in sys.stdin:
         status_size = re.search(status_size_pattern, log)
         status_size = str(status_size.group())
         status, size = int(status_size[:3]), int(status_size[4: 8])
-    if status in statuses:
+    if type(status) == int and status in statuses:
         statuses[status] += 1
     total_size += size
     if count % 10 == 0 or KeyboardInterrupt:
