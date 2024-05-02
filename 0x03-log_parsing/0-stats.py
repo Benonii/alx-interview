@@ -17,7 +17,7 @@ def signal_handler(signal, form):
     sys.exit(0)
 
 
-# signal.signal(signal.SIGINT, signal_handler)
+signal.signal(signal.SIGINT, signal_handler)
 
 
 def print_stats(total_size, statuses):
@@ -40,25 +40,20 @@ final_pattern = f'{ip_addr_pattern} - \\[{date_pattern}\\]'\
                 + f' {string_pattern} {status_size_pattern}'
 count = 0
 
-try:
-    for log in sys.stdin:
-        if re.match(final_pattern, log) is not None:
-            status_size = re.search(status_size_pattern, log)
-            status_size = str(status_size.group())
-            status, size = int(status_size[:3]), int(status_size[4: 8])
-        else:
-            print("log not a match")
-            continue
+for log in sys.stdin:
+    if re.match(final_pattern, log) is not None:
+        status_size = re.search(status_size_pattern, log)
+        status_size = str(status_size.group())
+        status, size = int(status_size[:3]), int(status_size[4: 8])
+    else:
+        print("log not a match")
+        continue
+    if status in statuses.keys():
+        statuses[status] += 1
+    else:
+        print(f"{status} not in statuses")
+    count += 1
+    total_size += size
 
-        if status in statuses.keys():
-            statuses[status] += 1
-        else:
-            print(f"{status} not in statuses")
-
-        count += 1
-        total_size += size
-
-        if count % 10 == 0:
-            print_stats(total_size, statuses)
-except KeyboardInterrupt:
-    pass
+    if count % 10 == 0:
+        print_stats(total_size, statuses)
