@@ -1,59 +1,43 @@
-#!/usr/bin/python3
-
-''' Parses log and reports stats '''
-
 import sys
-import re
 import signal
 
-
-total_size = 0
-statuses = {200: 0, 301: 0, 400: 0, 401: 0, 403: 0, 404: 0, 405: 0, 500: 0}
-
-
-def signal_handler(signal, form):
-    ''' Handler for SIGINT '''
-    print_stats(total_size, statuses)
+def signal_handler(sig, frame):
+    print_stats()
     sys.exit(0)
-
 
 signal.signal(signal.SIGINT, signal_handler)
 
+def print_stats():
+    global total_size
+    print("Total file size:", total_size)
+    for status_code in sorted(status_codes.keys()):
+        print(status_code, ":", status_codes[status_code])
 
-def print_stats(total_size, statuses):
-    ''' Prints number of status codes and total file size '''
-    print(f"File size: {total_size}")
-    for key, value in sorted(statuses.items()):
-        if statuses[key] == 0:
+total_size = 0
+status_codes = {'200': 0, '301': 0, '400': 0, '401': 0, '403': 0, '404': 0, '405': 0, '500': 0}
+
+try:
+    line_count = 0
+    for line in sys.stdin:
+        line_count += 1
+        if line_count % 10 == 0:
+            print_stats()
+
+        parts = line.split()
+        if len(parts) != 7:
             continue
-        else:
-            print(f'{key}: {value}')
 
+        ip_address, date, method, status_code, file_size = parts[0], parts[3][1:], parts[5], parts[6], parts[7]
+        if not status_code.isdigit():
+            continue
 
-ip_addr_pattern = r'[0-2]?[0-9]?[0-9]\.[0-2]?[0-9]?[0-9]\.'\
-                    + r'[0-2]?[0-9]?[0-9]\.[0-2]?[0-9]?[0-9]'
-date_pattern = r'[12][0-9][0-9][0-9]-[01][0-9]-[0-3][0-9] '\
-                + r'[0-2][0-9]:[0-6][0-9]:[0-6][0-9].\d{6}'
-string_pattern = r'"GET /projects/260 HTTP/1.1"'
-status_size_pattern = r'(200|301|400|401|403|404|405|500) \d{1,4}'
-final_pattern = f'{ip_addr_pattern} - \\[{date_pattern}\\]'\
-                + f' {string_pattern} {status_size_pattern}'
-count = 0
+        status_code = status_code.strip()
+        if status_code in status_codes:
+            status_codes[status_code] += 1
 
-for log in sys.stdin:
-    if re.match(final_pattern, log) is not None:
-        status_size = re.search(status_size_pattern, log)
-        status_size = str(status_size.group())
-        status, size = int(status_size[:3]), int(status_size[4: 8])
-    else:
-        print("log not a match")
-        continue
-    if status in statuses.keys():
-        statuses[status] += 1
-    else:
-        print(f"{status} not in statuses")
-    count += 1
-    total_size += size
+        total_size += int(file_size)
 
-    if count % 10 == 0:
-        print_stats(total_size, statuses)
+except KeyboardInterrupt:
+    pass
+finally:
+    print_stats()
