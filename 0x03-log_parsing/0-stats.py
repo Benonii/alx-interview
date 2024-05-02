@@ -18,12 +18,12 @@ signal.signal(signal.SIGINT, signal_handler)
 def print_stats():
     ''' Prints number of status codes and total file size '''
     global total_size
-    print(f"File size: {total_size}")
+    print(f"File size:", total_size)
     for key, value in sorted(statuses.items()):
         if statuses[key] == 0:
             continue
         else:
-            print(f'{key}: {value}')
+            print(key, ":", value)
 
 
 ip_addr_pattern = r'[0-2]?[0-9]?[0-9]\.[0-2]?[0-9]?[0-9]\.'\
