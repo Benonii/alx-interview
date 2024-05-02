@@ -7,11 +7,10 @@ import re
 import signal
 
 
-
-
 def signal_handler(signal, form):
     ''' Handler for SIGINT '''
     print_stats()
+
 
 signal.signal(signal.SIGINT, signal_handler)
 
