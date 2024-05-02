@@ -4,7 +4,23 @@
 
 import sys
 import re
+import signal
 
+def signal_handler(signal):
+    ''' Handler for SIGINT '''
+    print_stats()
+    sys.exit(0)
+
+signal.signal(signal.SIGINT, signal_handler)
+
+def print_stats(total_size, statuses):
+    ''' Prints number of status codes and total file size '''
+    print(f"File size: {total_size}")
+            for key, value in sorted(statuses.items()):
+                if statuses[key] == 0:
+                    continue
+                else:
+                    print(f'{key}: {value}')
 
 try:
     ip_addr_pattern = r'[0-2]?[0-9]?[0-9]\.[0-2]?[0-9]?[0-9]\.'\
@@ -40,18 +56,6 @@ try:
         total_size += size
 
         if count % 10 == 0 or KeyboardInterrupt:
-            print(f"File size: {total_size}")
-            for key, value in sorted(statuses.items()):
-                if statuses[key] == 0:
-                    continue
-                else:
-                    print(f'{key}: {value}')
-
+           print_stats()
 except KeyboardInterrupt:
-    print(f"File size: {total_size}")
-    for key, value in sorted(statuses.items()):
-        if statuses[key] == 0:
-            continue
-        else:
-            print(f'{key}: {value}')
-    # raise KeyboardInterrupt
+    print_stats()
