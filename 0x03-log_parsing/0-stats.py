@@ -39,14 +39,14 @@ try:
         count += 1
         total_size += size
 
-        if count == 10 or KeyboardInterrupt:
+        if count % 10 == 0 or KeyboardInterrupt:
             print(f"File size: {total_size}")
             for key, value in sorted(statuses.items()):
                 if statuses[key] == 0:
                     continue
                 else:
                     print(f'{key}: {value}')
-            count = 0
+
 except KeyboardInterrupt:
     print(f"File size: {total_size}")
     for key, value in sorted(statuses.items()):
