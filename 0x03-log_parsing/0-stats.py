@@ -49,4 +49,4 @@ for log in sys.stdin:
         statuses[status] += 1
     total_size += size
     if count % 10 == 0 or KeyboardInterrupt:
-         print_stats()
+        print_stats()
