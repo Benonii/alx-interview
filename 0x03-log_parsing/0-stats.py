@@ -39,7 +39,7 @@ status_size_pattern = r'(200|301|400|401|403|404|405|500) \d{1,4}'
 final_pattern = f'{ip_addr_pattern} - \\[{date_pattern}\\]'\
                 + f' {string_pattern} {status_size_pattern}'
 count = 0
-# logs = sys.stdin.readlines()
+
 try:
     for log in sys.stdin:
         if re.match(final_pattern, log) is not None:
@@ -62,5 +62,3 @@ try:
             print_stats(total_size, statuses)
 except KeyboardInterrupt:
     pass
-finally:
-    print_stats()
