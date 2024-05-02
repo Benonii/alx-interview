@@ -1,7 +1,10 @@
 #!/usr/bin/python3
 
+''' Parses log and reports stats '''
+
 import sys
 import re
+
 
 try:
     ip_addr_pattern = r'[0-2]?[0-9]?[0-9]\.[0-2]?[0-9]?[0-9]\.'\
