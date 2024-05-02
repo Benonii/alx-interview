@@ -4,21 +4,22 @@ import sys
 import re
 
 try:
-    ip_addr_pattern = r'[0-2]?[0-9]?[0-9]\.[0-2]?[0-9]?[0-9]\.'
-    ip_addr_pattern_2 = r'[0-2]?[0-9]?[0-9]\.[0-2]?[0-9]?[0-9]'
-    date_pattern = r'[12][0-9][0-9][0-9]-[01][0-9]-[0-3][0-9] '
-    date_pattern_2 = r'[0-2][0-9]:[0-6][0-9]:[0-6][0-9].\d{6}'
+    ip_addr_pattern = r'[0-2]?[0-9]?[0-9]\.[0-2]?[0-9]?[0-9]\.'\
+                      + r'[0-2]?[0-9]?[0-9]\.[0-2]?[0-9]?[0-9]'
+    date_pattern = r'[12][0-9][0-9][0-9]-[01][0-9]-[0-3][0-9] '\
+                   + r'[0-2][0-9]:[0-6][0-9]:[0-6][0-9].\d{6}'
     string_pattern = r'"GET /projects/260 HTTP/1.1"'
     status_size_pattern = r'(200|301|400|401|403|404|405|500) \d{1,4}'
-    final_pattern = f'{ip_addr_pattern}{ip_addr_pattern_2} - [{date_pattern}' \
-                    + f'{date_pattern_2}] {string_pattern}' \
-                    + f'{status_size_pattern}'
+    final_pattern = f'{ip_addr_pattern} - \\[{date_pattern}\\]'\
+                    + f' {string_pattern} {status_size_pattern}'
     total_size = 0
     statuses = {200: 0, 301: 0, 400: 0, 401: 0, 403: 0, 404: 0, 405: 0, 500: 0}
     count = 0
     logs = sys.stdin.readlines()
 
+    # print(final_pattern)
     for log in logs:
+        # print(log)
         if re.match(final_pattern, log) is not None:
             status_size = re.search(status_size_pattern, log)
             status_size = str(status_size.group())
