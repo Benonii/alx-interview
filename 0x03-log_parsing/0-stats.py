@@ -50,3 +50,4 @@ for log in sys.stdin:
     total_size += size
     if count % 10 == 0:
         print_stats()
+print_stats()
