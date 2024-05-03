@@ -48,6 +48,6 @@ for log in sys.stdin:
     if status in statuses:
         statuses[status] += 1
     total_size += size
-    if count % 10 == 0 or KeyboardInterrupt:
+    if count % 10 == 0:
         print_stats()
 print_stats()
