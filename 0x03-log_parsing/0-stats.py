@@ -23,7 +23,7 @@ def print_stats():
         if statuses[key] == 0:
             continue
         else:
-            print(key, ":", value)
+            print(str(key) + ":", value)
 
 
 ip_addr_pattern = r'[0-2]?[0-9]?[0-9]\.[0-2]?[0-9]?[0-9]\.'\
