@@ -27,15 +27,11 @@ def validUTF8(data):
 
         if bytes > 4 or bytes == 1 or k >= len(data):
             return False
-
-        if bytes == 0:
-            i += 1
-            continue
-
+            
+        i += 1
         for j in range(1, bytes):
             ''' if calculate_bytes() returns 1, the number in binary
-                starts with '10', making it a continuation bit '''
-            i += 1
+                starts with '10', making it a continuation bit ''' 
             is_continuation_bit = calculate_bytes(data[i])
             if is_continuation_bit != 1:
                 return False
