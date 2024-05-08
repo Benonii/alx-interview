@@ -22,6 +22,9 @@ def validUTF8(data):
 
     i = 0
     while i < len(data):
+        if data[i] > 111411:
+            return False
+
         bytes = calculate_bytes(data[i])
         k = i + bytes - (bytes != 0)
 
