@@ -8,6 +8,11 @@ Contains the function validUTF8()
 def validUTF8(data):
     ''' Make sure data is utf-8 encoded(encodable) by using bitwise operations
     '''
+    if not data:
+        return False
+
+    if not all(isinstance(element, int) for element in data):
+        return False
 
     def calculate_bytes(num):
         ''' calculates how many bytes are used to represent a character in
