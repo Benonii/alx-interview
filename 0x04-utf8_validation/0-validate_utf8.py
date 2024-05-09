@@ -16,29 +16,27 @@ def validUTF8(data):
 
         bytes = 0
         while num & mask:
+            print(f'Num: {num}\n Mask:  {mask}')
             mask >>= 1
             bytes += 1
         return bytes
 
     i = 0
     while i < len(data):
-        if data[i] > 111411:
-            return False
-
         bytes = calculate_bytes(data[i])
+        print('Bytes:', bytes)
         k = i + bytes - (bytes != 0)
 
         if bytes > 4 or bytes == 1 or k >= len(data):
             return False
-
-        if bytes == 0:
-            i += 1
 
         for j in range(1, bytes):
             ''' if calculate_bytes() returns 1, the number in binary
                 starts with '10', making it a continuation bit '''
             i += 1
             is_continuation_bit = calculate_bytes(data[i])
+            print("IS Continuation Bit: ", is_continuation_bit)
             if is_continuation_bit != 1:
                 return False
+        i += 1
     return True
