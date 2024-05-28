@@ -14,5 +14,5 @@ def rotate_2d_matrix(matrix):
     for i in range(n):
         for j in range(n):
             temp = matrix[i][j]
-            matrix[i][j] = matrix[i][n - 1 - i]
-            matrix[i][n - 1 - i] = temp
+            matrix[i][j] = matrix[i][n - 1 - j]
+            matrix[i][n - 1 - j] = temp
