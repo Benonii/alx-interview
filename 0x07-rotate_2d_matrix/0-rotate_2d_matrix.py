@@ -13,5 +13,5 @@ def rotate_2d_matrix(matrix):
 
     for row in matrix:
         temp = row[0]
-        row[0] = row[n - 1]
-        row[n - 1] = temp
+        row[0] = row[n - 1 - i]
+        row[n - 1 - i] = temp
