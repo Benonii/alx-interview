@@ -17,7 +17,7 @@ def makeChange(coins, total):
         for coin in coins:
             if coin <= i:
                 memo[i] = min(memo[i - coin] + 1, memo[i])
-
+    if memo[total] > total:
         return -1
 
     return memo[total]
