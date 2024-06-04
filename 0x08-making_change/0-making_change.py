@@ -13,8 +13,8 @@ def makeChange(coins, total):
     for i in range(1, total + 1):
         memo.append(total + 1)
 
-     for i in range(1, len(memo)):
-         for coin in coins:
+    for i in range(1, len(memo)):
+        for coin in coins:
             if coin <= i:
                 memo[i] = min(memo[i - coin] + 1, memo[i])
 
