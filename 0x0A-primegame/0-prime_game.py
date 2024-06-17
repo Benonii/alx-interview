@@ -43,7 +43,6 @@ def isWinner(x, nums):
         for player in players:
             # The first available prime number in the list of primes
             if primes == []:
-                player[1]["wins"] += 1
                 break
 
             prime = primes[i]
