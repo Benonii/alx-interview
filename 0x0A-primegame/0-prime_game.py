@@ -7,7 +7,7 @@
 def sieve_of_eratosthenes(n):
     ''' Gets all prime numbers upto and including n(if n is prime) '''
 
-    prime = [True for i in range(n + 1)]
+    prime = [True for _ in range(n + 1)]
     primes = []
     p = 2
 
@@ -43,6 +43,7 @@ def isWinner(x, nums):
         for player in players:
             # The first available prime number in the list of primes
             if primes == []:
+                player[1]["wins"] += 1
                 break
 
             prime = primes[i]
@@ -69,7 +70,7 @@ def isWinner(x, nums):
 
     if players[0]["wins"] > players[1]["wins"]:
         return "Maria"
-        # elif players[1]["wins"] > players[0]["wins"]:
-        # return "Ben"
-    else:
+    elif players[1]["wins"] > players[0]["wins"]:
         return "Ben"
+    else:
+        return None
