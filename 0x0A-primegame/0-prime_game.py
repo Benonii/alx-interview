@@ -29,44 +29,6 @@ def sieve_of_eratosthenes(n):
 
 def isWinner(x, nums):
     ''' Returns either Maria or Ben depending on who has more wins '''
-    maria_wins = 0
-    ben_wins = 0
-
-    for n in nums:
-        primes = sieve_of_eratosthenes(n)
-        if not primes:
-            ben_wins += 1
-            continue
-
-        all_numbers = set(range(1, n + 1))
-        maria_turn = True
-
-        while True:
-            prime_found = False
-            for prime in primes:
-                if prime in all_numbers:
-                    prime_found = True
-                    multiples = set(range(prime, n + 1, prime))
-                    all_numbers -= multiples
-                    break
-            if not prime_found:
-                if maria_turn:
-                    ben_wins += 1
-                else:
-                    maria_wins += 1
-                break
-            maria_turn = not maria_turn
-
-    if maria_wins > ben_wins:
-        return "Maria"
-    elif ben_wins > maria_wins:
-        return "Ben"
-    else:
-        return None
-
-
-def is_Winner(x, nums):
-    ''' Returns either Maria or Ben depending on who has more wins '''
     players = [{"name": "Maria", "wins": 0}, {"name": "Ben", "wins": 0}]
 
     for round in range(x):
