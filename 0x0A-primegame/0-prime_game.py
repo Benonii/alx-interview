@@ -52,7 +52,7 @@ def isWinner(x, nums):
                 if number == prime or number % prime == 0:
                     all_numbers.remove(number)
 
-            if i < len(primes) - 1:
+            if i < len(primes):
                 i += 1
 
             # If there are no more prime numbers left to play, the round ends
@@ -66,7 +66,7 @@ def isWinner(x, nums):
                     # Otherwise Ben gets a point
                     players[1]["wins"] += 1
                 break
-
+    print(f"Maria has {players[0]['wins']} wins\nBen has {players[1]['wins']} wins")
     if players[0]["wins"] > players[1]["wins"]:
         return "Maria"
     elif players[1]["wins"] > players[0]["wins"]:
